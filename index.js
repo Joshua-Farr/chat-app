@@ -1,13 +1,10 @@
-const { readFileSync } = require("fs");
-const { WebSocket, WebSocketServer } = require("ws");
-const uuidv4 = require("uuid").v4;
+import { WebSocketServer } from "ws";
 
-const http = require("http");
-const { randomUUID } = require("crypto");
-const port = 3000;
-const hostname = "127.0.0.1";
+import { createServer } from "http";
+const port = 8082;
+const hostname = "localhost";
 
-const server = http.createServer();
+const server = createServer();
 
 const webSocketServer = new WebSocketServer({ server });
 
@@ -19,17 +16,16 @@ server.listen(port, hostname, () => {
 
 const users = {};
 
-webSocketServer.on(
-  "connection",
-  (handleConnection = (connection) => {
-    const userId = uuidv4();
-    console.log("A new user has connected!");
-    users[userId] = connection;
+webSocketServer.on("connection", function handleNewConnection(connection) {
+  const userId = Math.floor(Math.random() * 1000000);
+  console.log("A new user has connected!");
+  users[userId] = connection;
 
-    connection.on("message", (message) => {
-      console.log(`${userId} has sent the following message: ${message}`);
-    });
+  connection.on("message", (message) => {
+    console.log(`User ${userId} has sent the following message: ${message}`);
+  });
 
-    connection.on("close", () => handleClientDisconnection(userId));
-  })
-);
+  connection.on("close", () => {
+    console.log("Conneciton closed!");
+  });
+});

@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import styled from "styled-components";
+import { sendMessage } from "../utilities/messaging";
 
 const FormWrapper = styled.div`
   border-block: 2px solid #d3d3d3;
@@ -40,12 +41,17 @@ const SubmitButton = styled.button`
   }
 `;
 
-export const ChatInput = () => {
+type ChatProps = {
+  chatSocket: WebSocket;
+};
+
+export const ChatInput = (props: ChatProps) => {
   const [message, setMessage] = useState("");
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault;
-    console.log("Message: ", message);
+    e.preventDefault();
+    console.log("Message sent to server: ", message);
+    sendMessage(message, props.chatSocket);
   };
 
   return (
