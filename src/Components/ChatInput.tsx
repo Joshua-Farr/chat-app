@@ -4,7 +4,9 @@ import { sendMessage } from "../utilities/messaging";
 
 const FormWrapper = styled.div`
   border-block: 2px solid #d3d3d3;
-  padding-top: 1em;
+  //   padding: 0.5em;
+  padding: 1.25em 1em 1em 1em;
+  margin-top: auto;
 `;
 
 const Form = styled.form`
@@ -14,8 +16,8 @@ const Form = styled.form`
   justify-content: center;
 
   width: 100%;
-  border-radius: 6px;
-  padding: 0.25em;
+  //   border-radius: 6px;
+  //   padding: 0.25em;
 `;
 
 const Input = styled.input`
@@ -61,7 +63,6 @@ export const ChatInput = (props: ChatProps) => {
           onChange={(e) => {
             e.preventDefault();
             setMessage(e.target.value);
-            console.log(message);
           }}
           type="text"
         />
