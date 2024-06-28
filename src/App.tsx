@@ -1,8 +1,6 @@
-import "./App.css";
 import { ChatDisplay } from "./Components/ChatDisplay";
 import { ChatInput } from "./Components/ChatInput";
 import styled from "styled-components";
-import { SideBar } from "./Components/SideBar";
 import { ChannelSideBar } from "./Components/ChannelSideBar";
 
 const AppWrapper = styled.div`
@@ -26,6 +24,11 @@ function App() {
       console.log("We are connected!");
       socket.send("Hello Server!");
     });
+
+    socket.addEventListener("message", (message) => {
+      console.log("The server has responded with: ", message.data);
+    });
+
     return (
       <AppWrapper>
         <ChannelSideBar />

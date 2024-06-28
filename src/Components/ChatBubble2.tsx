@@ -45,7 +45,7 @@ export const ChatBubble2 = () => {
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores
           ullam facilis iure.
         </Message>
-        <Info>Delivered</Info>
+        {/* <Info>Delivered</Info> */}
       </Bubble>
       <Avatar />
     </Wrapper>
