@@ -34,13 +34,13 @@ export const ChatDisplay = () => {
     ],
   };
 
-  const generateBubbles = (messages: any) => {
-    const editedMessages = [];
+  // const generateBubbles = (messages: any) => {
+  //   const editedMessages = [];
 
-    messages?.messages.forEach((message) => {
-      editedMessages.push(<ChatBubble message={message.message} />);
-    });
-  };
+  //   messages?.messages.forEach((message) => {
+  //     editedMessages.push(<ChatBubble message={message.message} />);
+  //   });
+  // };
 
   return (
     <ChatWrapper>

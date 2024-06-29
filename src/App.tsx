@@ -16,17 +16,26 @@ const ChatWrapper = styled.div`
 `;
 
 function App() {
+  let myClientID = "";
+
   try {
     const socket = new WebSocket("ws://localhost:8082");
-    console.log("Client socket created");
+    // console.log("Client socket created");
 
     socket.addEventListener("open", () => {
-      console.log("We are connected!");
+      console.log("We are connected to the server!");
       socket.send("Hello Server!");
     });
 
     socket.addEventListener("message", (message) => {
-      console.log("The server has responded with: ", message.data);
+      const serverMessage = JSON.parse(message.toString());
+
+      if (serverMessage.messageType === "confirmation") {
+        myClientID = serverMessage.userID;
+        console.log(myClientID);
+      } else {
+        console.log("The server has responded with:", message);
+      }
     });
 
     return (
