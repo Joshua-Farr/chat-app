@@ -2,6 +2,8 @@ import { ChatDisplay } from "./Components/ChatDisplay";
 import { ChatInput } from "./Components/ChatInput";
 import styled from "styled-components";
 import { ChannelSideBar } from "./Components/ChannelSideBar";
+import { useState } from "react";
+import { Message } from "./types";
 
 const AppWrapper = styled.div`
   height: 100vh;
@@ -41,6 +43,7 @@ function App() {
       timeStamp: Date.now(),
     },
   ];
+  const [conversationHistory, setConversationHistory] = useState(ongoingChat);
 
   try {
     const socket = new WebSocket("ws://localhost:8082");
@@ -59,14 +62,21 @@ function App() {
         console.log("My clientID is: ", myClientID);
       } else {
         console.log("The server has responded with:", message);
+        updateConversationHistory(message.data.toString());
       }
     });
+
+    const updateConversationHistory = (message: Message) => {
+      setConversationHistory((prev) => {
+        return [...prev, message];
+      });
+    };
 
     return (
       <AppWrapper>
         <ChannelSideBar />
         <ChatWrapper>
-          <ChatDisplay chat={ongoingChat} />
+          <ChatDisplay chat={conversationHistory} />
           <ChatInput chatSocket={socket}></ChatInput>
         </ChatWrapper>
       </AppWrapper>

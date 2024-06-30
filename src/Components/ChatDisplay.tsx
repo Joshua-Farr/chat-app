@@ -9,19 +9,12 @@ const ChatWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1em;
+  overflow: scroll;
 `;
 
 export const ChatDisplay = ({ chat }: { chat: Message[] }) => {
-  // const generateBubbles = (messages: any) => {
-  //   const editedMessages = [];
-
-  //   messages?.messages.forEach((message) => {
-  //     editedMessages.push(<ChatBubble message={message.message} />);
-  //   });
-  // };
-
   const messages = chat.map((message) => {
-    console.log("this is the message:", message);
+    //Need to add functionality to render chat bubble based on who sent the message
     return <ChatBubble message={message.message} />;
   });
 
