@@ -21,7 +21,7 @@ export const ChatDisplay = ({ chat }: { chat: Message[] }) => {
   return (
     <ChatWrapper>
       <ChatBubble2 />
-      {messages}
+      {/* {messages} */}
     </ChatWrapper>
   );
 };

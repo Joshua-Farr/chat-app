@@ -38,10 +38,13 @@ webSocketServer.on("connection", function handleNewConnection(connection) {
     console.log("************************");
 
     broadcastMessage(decodedMessage, users, userId);
+    let keys = Object.keys(users);
+
+    console.log("Here are all connected users: ", keys);
   });
 
   connection.on("close", () => {
-    console.log("Conneciton closed!");
+    console.log("Connection closed!");
   });
 });
 
@@ -62,14 +65,15 @@ const broadcastMessage = (message, allClients, originClient) => {
       console.log("Here is the formatted Message: ", formattedMessage);
 
       allClients[client].send(formattedMessage);
-    } else {
-      const formattedMessage = formatMessage(
-        "broadcast",
-        client,
-        "YOU ARE THE ORIGINAL CLIENT!!"
-      );
-      allClients[client].send(formattedMessage);
-      console.log("YOU ARE THE ORIGINAL CLIENT: ", client);
     }
+    //  else {
+    //   const formattedMessage = formatMessage(
+    //     "broadcast",
+    //     client,
+    //     "YOU ARE THE ORIGINAL CLIENT!!"
+    //   );
+    //   allClients[client].send(formattedMessage);
+    //   console.log("YOU ARE THE ORIGINAL CLIENT: ", client);
+    // }
   }
 };

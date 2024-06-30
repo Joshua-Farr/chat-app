@@ -1,5 +1,7 @@
 export const sendMessage = (message: string, socket: WebSocket) => {
+  // if (socket) {
   socket.send(message);
+  // } else return;
 };
 
 export const generateMessageObject = (message: string, user: string) => {
