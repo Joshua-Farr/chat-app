@@ -32,7 +32,7 @@ const UserName = styled.span`
 `;
 const Message = styled.p``;
 
-export const ChatBubble = () => {
+export const ChatBubble = ({ message }) => {
   return (
     <Wrapper>
       <Avatar />
@@ -41,10 +41,7 @@ export const ChatBubble = () => {
           <UserName>Josh Farr</UserName>
           <Info>12:30</Info>
         </Header>
-        <Message>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores
-          ullam facilis iure.
-        </Message>
+        <Message>{message}</Message>
         {/* <Info>Delivered</Info> */}
       </Bubble>
     </Wrapper>

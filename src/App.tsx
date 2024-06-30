@@ -18,6 +18,30 @@ const ChatWrapper = styled.div`
 function App() {
   let myClientID = "";
 
+  let ongoingChat = [
+    {
+      destinationUserID: 123456,
+      messageType: "message",
+      message:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, illum fuga. Vero, eveniet aut incidunt commodi error",
+      timeStamp: Date.now(),
+    },
+    {
+      destinationUserID: 123456,
+      messageType: "message",
+      message:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, illum fuga. Vero, eveniet aut incidunt commodi error",
+      timeStamp: Date.now(),
+    },
+    {
+      destinationUserID: 123456,
+      messageType: "message",
+      message:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, illum fuga. Vero, eveniet aut incidunt commodi error",
+      timeStamp: Date.now(),
+    },
+  ];
+
   try {
     const socket = new WebSocket("ws://localhost:8082");
     // console.log("Client socket created");
@@ -28,11 +52,11 @@ function App() {
     });
 
     socket.addEventListener("message", (message) => {
-      const serverMessage = JSON.parse(message.toString());
-
+      // console.log("Trying to parse message from the server!", message);
+      const serverMessage = JSON.parse(message.data.toString());
       if (serverMessage.messageType === "confirmation") {
         myClientID = serverMessage.userID;
-        console.log(myClientID);
+        console.log("My clientID is: ", myClientID);
       } else {
         console.log("The server has responded with:", message);
       }
@@ -42,7 +66,7 @@ function App() {
       <AppWrapper>
         <ChannelSideBar />
         <ChatWrapper>
-          <ChatDisplay />
+          <ChatDisplay chat={ongoingChat} />
           <ChatInput chatSocket={socket}></ChatInput>
         </ChatWrapper>
       </AppWrapper>

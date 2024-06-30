@@ -33,6 +33,8 @@ webSocketServer.on("connection", function handleNewConnection(connection) {
 
     const decodedMessage = message.toString("utf8");
 
+    console.log("Here is the decodedMessage: ", decodedMessage);
+
     console.log("************************");
 
     broadcastMessage(decodedMessage, users, userId);
@@ -45,9 +47,10 @@ webSocketServer.on("connection", function handleNewConnection(connection) {
 
 const formatMessage = (messageType, userID, message) => {
   return JSON.stringify({
-    userID: userID,
+    destinationUserID: userID,
     messageType: messageType,
     message: message,
+    timeStamp: Date.now(),
   });
 };
 
@@ -56,6 +59,7 @@ const broadcastMessage = (message, allClients, originClient) => {
     if (client != originClient) {
       console.log("Broadcasting message", message, "to", client);
       const formattedMessage = formatMessage("broadcast", client, message);
+      console.log("Here is the formatted Message: ", formattedMessage);
 
       allClients[client].send(formattedMessage);
     } else {
@@ -64,7 +68,7 @@ const broadcastMessage = (message, allClients, originClient) => {
         client,
         "YOU ARE THE ORIGINAL CLIENT!!"
       );
-      allClients[client].send(formatMessage);
+      allClients[client].send(formattedMessage);
       console.log("YOU ARE THE ORIGINAL CLIENT: ", client);
     }
   }
