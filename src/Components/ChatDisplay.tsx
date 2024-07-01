@@ -27,28 +27,13 @@ export const ChatDisplay = ({
     }
   };
 
-  const messages = chat.map((message) => {
+  const messages = chat.map((message, index) => {
     if (message.senderUserID === userID) {
-      return <ChatBubble2 messageDetails={message} />;
+      return <ChatBubble2 key={index} messageDetails={message} />;
     } else {
-      return <ChatBubble messageDetails={message} />;
+      return <ChatBubble key={index} messageDetails={message} />;
     }
   });
-
-  // const targetNode = document.getElementById("chat-wrapper");
-  // const config = { attributes: true, childList: true, subtree: true };
-
-  // const callback = (mutationList: any) => {
-  //   for (const mutation of mutationList) {
-  //     if (mutation.type === "childList") {
-  //       scrollToBottomOfPage();
-  //     }
-  //   }
-  // };
-
-  // const observer = new MutationObserver(callback);
-
-  // observer.observe(targetNode, config);
 
   scrollToBottomOfPage();
 
