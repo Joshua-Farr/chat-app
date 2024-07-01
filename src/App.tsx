@@ -23,7 +23,7 @@ function App() {
       senderUserID: 123456,
       messageType: "message",
       message:
-        "Hey there, welcome to the chat! Send something to get the conversation started!",
+        "Hey there, welcome to the chat! Send something to get the conversation started or type `/commands` to get a list of all available chat commands!",
       timeStamp: new Date(),
     },
   ];
@@ -51,7 +51,6 @@ function App() {
           console.log("My clientID is: ", myClientID);
         } else {
           console.log("The server has responded with:", message);
-          console.log("HERE IS THE DATAAA, ", JSON.parse(message.data));
           updateConversationHistory(JSON.parse(message.data));
         }
       });

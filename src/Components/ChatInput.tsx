@@ -4,10 +4,10 @@ import { sendMessage } from "../utilities/messaging";
 import { Message } from "../types";
 
 const FormWrapper = styled.div`
-  border-block: 2px solid #d3d3d3;
+  // border-block: 2px solid #d3d3d3;
   //   padding: 0.5em;
   padding: 1.25em 1em 1em 1em;
-  margin-top: auto;
+  // margin-top: auto;
 `;
 
 const Form = styled.form`

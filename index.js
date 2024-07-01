@@ -33,18 +33,19 @@ webSocketServer.on("connection", function handleNewConnection(connection) {
 
     const decodedMessage = message.toString("utf8");
 
-    console.log("Here is the decodedMessage: ", decodedMessage);
-
     console.log("************************");
 
-    broadcastMessage(decodedMessage, users, userId);
-    let keys = Object.keys(users);
-
-    console.log("Here are all connected users: ", keys);
+    if (decodedMessage.charAt(0) === "/") {
+      const returnMessage = handleCommand(decodedMessage, userId, users);
+      const responseMessage = formatMessage("response", userId, returnMessage);
+      connection.send(responseMessage);
+    } else {
+      broadcastMessage(decodedMessage, users, userId);
+    }
   });
 
   connection.on("close", () => {
-    console.log("Connection closed!");
+    console.log("Connection with userID, ", userId, " closed!");
   });
 });
 
@@ -67,4 +68,32 @@ const broadcastMessage = (message, allClients, originClient) => {
       allClients[client].send(formattedMessage);
     }
   }
+};
+
+const getAllConnectedUsers = (userList) => {
+  let keys = Object.keys(userList);
+  const response = "Here are all connected users: " + keys;
+  return response;
+};
+
+const handleCommand = (message, userID, listOfAllUsers) => {
+  console.log("&&&&&&&&&& HANDLING THE COMMAND", message);
+
+  let commandResponse = "";
+  if (message === "/userID") {
+    console.log("Trying to get the userID!");
+    commandResponse = `Here is your userID: ${userID}`;
+  } else if (message === "/commands") {
+    commandResponse =
+      "Try sending these commands:" +
+      "- /commands (list all commands)\n" +
+      "- /userID (get your userID)\n" +
+      "- /server (who is online)\n";
+  } else if (message === "/server") {
+    commandResponse = getAllConnectedUsers(listOfAllUsers);
+  } else {
+    commandResponse =
+      "Sorry! Thats not a valid command! \nTry using /commands to get a list of all valid commands!";
+  }
+  return commandResponse;
 };

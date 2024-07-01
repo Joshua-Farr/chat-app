@@ -59,6 +59,22 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({ messageDetails }) => {
         </Bubble>
       </Wrapper>
     );
+  } else if (messageDetails.messageType === "response") {
+    console.log("HERE ARE THE COMMAND DETAILS: ", messageDetails);
+
+    return (
+      //Command Response bot
+
+      <Wrapper>
+        <Avatar />
+        <Bubble $welcomeBot>
+          <Header>
+            <UserName>Command Bot:</UserName>
+          </Header>
+          <MessageText id="message-text">{messageDetails.message}</MessageText>
+        </Bubble>
+      </Wrapper>
+    );
   } else if (messageDetails.message === "Hello Server!") {
     return (
       //Letting the user know that a new person has joined the server

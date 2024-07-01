@@ -28,7 +28,7 @@ export const ChatDisplay = ({
   };
 
   const messages = chat.map((message, index) => {
-    if (message.senderUserID === userID) {
+    if (message.senderUserID === userID && message.messageType != "response") {
       return <ChatBubble2 key={index} messageDetails={message} />;
     } else {
       return <ChatBubble key={index} messageDetails={message} />;
