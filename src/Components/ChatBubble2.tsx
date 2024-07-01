@@ -13,7 +13,8 @@ const Bubble = styled.div`
   gap: 0.5em;
 
   background-color: #b2dcef;
-  padding: 1em;
+  padding: 0.75em 1.25em 0.75em 1.25em;
+  min-width: 20em;
 
   border-radius: 20px 0 20px 20px;
 `;
@@ -25,13 +26,17 @@ const Avatar = styled.img`
 `;
 const Header = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 1em;
 `;
 const Info = styled.span`
   font-weight: 200;
+  font-size: 0.75rem;
 `;
 const UserName = styled.span`
   font-weight: 700;
+  font-size: 0.85rem;
 `;
 const MessageText = styled.p``;
 

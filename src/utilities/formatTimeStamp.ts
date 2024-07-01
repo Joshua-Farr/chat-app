@@ -7,9 +7,9 @@ export const formatTimeStamp = (time: Date) => {
 
     const formattedHours =
       dateTime.getHours() > 12 ? dateTime.getHours() - 12 : dateTime.getHours();
-    const formattedMinutes = dateTime.getMinutes();
+    const formattedMinutes = dateTime.getMinutes().toString().padStart(2, "0");
 
-    const suffix = dateTime.getHours() > 12 ? "PM" : "AM";
+    const suffix = dateTime.getHours() > 12 ? "pm" : "am";
 
     formattedTimeString = `${formattedHours}:${formattedMinutes} ${suffix}`;
 

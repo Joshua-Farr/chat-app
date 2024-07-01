@@ -49,7 +49,7 @@ webSocketServer.on("connection", function handleNewConnection(connection) {
 });
 
 const formatMessage = (messageType, userID, message) => {
-  const timeSent = new Date();
+  let timeSent = new Date();
   return JSON.stringify({
     senderUserID: userID,
     messageType: messageType,
@@ -64,17 +64,7 @@ const broadcastMessage = (message, allClients, originClient) => {
       console.log("Broadcasting message", message, "to", client);
       const formattedMessage = formatMessage("broadcast", client, message);
       console.log("Here is the formatted Message: ", formattedMessage);
-
       allClients[client].send(formattedMessage);
     }
-    //  else {
-    //   const formattedMessage = formatMessage(
-    //     "broadcast",
-    //     client,
-    //     "YOU ARE THE ORIGINAL CLIENT!!"
-    //   );
-    //   allClients[client].send(formattedMessage);
-    //   console.log("YOU ARE THE ORIGINAL CLIENT: ", client);
-    // }
   }
 };

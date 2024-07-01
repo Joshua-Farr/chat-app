@@ -12,7 +12,8 @@ const Bubble = styled.div<{ $welcomeBot?: boolean }>`
   gap: 0.5em;
   background-color: ${(props) => (props.$welcomeBot ? "#9fe2bf" : "#f3f4f6")};
   // background-color: #f3f4f6;
-  padding: 1em;
+  padding: 0.75em 1.25em 0.75em 1.25em;
+  min-width: 20em;
 
   border-radius: 0 20px 20px 20px;
 `;
@@ -24,13 +25,17 @@ const Avatar = styled.img`
 `;
 const Header = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 1em;
 `;
 const Info = styled.span`
   font-weight: 200;
+  font-size: 0.75rem;
 `;
 const UserName = styled.span`
   font-weight: 700;
+  font-size: 0.85rem;
 `;
 const MessageText = styled.p``;
 
@@ -43,36 +48,35 @@ export const ChatBubble: React.FC<ChatBubbleProps> = ({ messageDetails }) => {
 
   if (messageDetails.senderUserID === 123456) {
     return (
+      //Initial welcome chat bubble
       <Wrapper>
         <Avatar />
         <Bubble $welcomeBot>
           <Header>
             <UserName>Welcome Bot:</UserName>
-            {/* <Info>Sent: {messageDetails.timeStamp}</Info> */}
           </Header>
           <MessageText>{messageDetails.message}</MessageText>
-          {/* <Info>Delivered</Info> */}
         </Bubble>
       </Wrapper>
     );
   } else if (messageDetails.message === "Hello Server!") {
     return (
+      //Letting the user know that a new person has joined the server
       <Wrapper>
         <Avatar />
         <Bubble $welcomeBot>
           <Header>
             <UserName>Welcome Bot:</UserName>
-            {/* <Info>Sent: {messageDetails.timeStamp}</Info> */}
           </Header>
           <MessageText>
             User {messageDetails.senderUserID} has joined the server!
           </MessageText>
-          {/* <Info>Delivered</Info> */}
         </Bubble>
       </Wrapper>
     );
   } else {
     return (
+      //"Normal" chat bubble message
       <Wrapper>
         <Avatar />
         <Bubble>

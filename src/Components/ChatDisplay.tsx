@@ -17,7 +17,7 @@ export const ChatDisplay = ({
   userID,
 }: {
   chat: Message[];
-  userID: number;
+  userID: number | undefined;
 }) => {
   const scrollToBottomOfPage = () => {
     console.log("Scrolling to bottom of page");
