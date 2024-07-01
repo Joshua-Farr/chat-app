@@ -49,11 +49,12 @@ webSocketServer.on("connection", function handleNewConnection(connection) {
 });
 
 const formatMessage = (messageType, userID, message) => {
+  const timeSent = new Date();
   return JSON.stringify({
-    destinationUserID: userID,
+    senderUserID: userID,
     messageType: messageType,
     message: message,
-    timeStamp: Date.now(),
+    timeStamp: timeSent,
   });
 };
 

@@ -1,15 +1,17 @@
 import styled from "styled-components";
+import { Message } from "../types";
+import { formatTimeStamp } from "../utilities/formatTimeStamp";
 
 const Wrapper = styled.div`
   display: flex;
   gap: 15px;
 `;
-const Bubble = styled.div`
+const Bubble = styled.div<{ $welcomeBot?: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-
-  background-color: #f3f4f6;
+  background-color: ${(props) => (props.$welcomeBot ? "#9fe2bf" : "#f3f4f6")};
+  // background-color: #f3f4f6;
   padding: 1em;
 
   border-radius: 0 20px 20px 20px;
@@ -30,20 +32,58 @@ const Info = styled.span`
 const UserName = styled.span`
   font-weight: 700;
 `;
-const Message = styled.p``;
+const MessageText = styled.p``;
 
-export const ChatBubble = ({ message }) => {
-  return (
-    <Wrapper>
-      <Avatar />
-      <Bubble>
-        <Header>
-          <UserName>Josh Farr</UserName>
-          <Info>12:30</Info>
-        </Header>
-        <Message>{message}</Message>
-        {/* <Info>Delivered</Info> */}
-      </Bubble>
-    </Wrapper>
-  );
+interface ChatBubbleProps {
+  messageDetails: Message;
+}
+
+export const ChatBubble: React.FC<ChatBubbleProps> = ({ messageDetails }) => {
+  const formattedTime = formatTimeStamp(messageDetails.timeStamp);
+
+  if (messageDetails.senderUserID === 123456) {
+    return (
+      <Wrapper>
+        <Avatar />
+        <Bubble $welcomeBot>
+          <Header>
+            <UserName>Welcome Bot:</UserName>
+            {/* <Info>Sent: {messageDetails.timeStamp}</Info> */}
+          </Header>
+          <MessageText>{messageDetails.message}</MessageText>
+          {/* <Info>Delivered</Info> */}
+        </Bubble>
+      </Wrapper>
+    );
+  } else if (messageDetails.message === "Hello Server!") {
+    return (
+      <Wrapper>
+        <Avatar />
+        <Bubble $welcomeBot>
+          <Header>
+            <UserName>Welcome Bot:</UserName>
+            {/* <Info>Sent: {messageDetails.timeStamp}</Info> */}
+          </Header>
+          <MessageText>
+            User {messageDetails.senderUserID} has joined the server!
+          </MessageText>
+          {/* <Info>Delivered</Info> */}
+        </Bubble>
+      </Wrapper>
+    );
+  } else {
+    return (
+      <Wrapper>
+        <Avatar />
+        <Bubble>
+          <Header>
+            <UserName>User {messageDetails.senderUserID}:</UserName>
+            <Info>Sent: {formattedTime}</Info>
+          </Header>
+          <MessageText>{messageDetails.message}</MessageText>
+          {/* <Info>Delivered</Info> */}
+        </Bubble>
+      </Wrapper>
+    );
+  }
 };

@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Message } from "../types";
+import { formatTimeStamp } from "../utilities/formatTimeStamp";
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,20 +33,23 @@ const Info = styled.span`
 const UserName = styled.span`
   font-weight: 700;
 `;
-const Message = styled.p``;
+const MessageText = styled.p``;
 
-export const ChatBubble2 = () => {
+interface ChatBubble2Props {
+  messageDetails: Message;
+}
+
+export const ChatBubble2: React.FC<ChatBubble2Props> = ({ messageDetails }) => {
+  const formattedTime = formatTimeStamp(messageDetails.timeStamp);
+
   return (
     <Wrapper>
       <Bubble>
         <Header>
-          <UserName>Josh Farr</UserName>
-          <Info>12:30</Info>
+          <UserName>You (User {messageDetails.senderUserID}):</UserName>
+          <Info>Sent: {formattedTime}</Info>
         </Header>
-        <Message>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores
-          ullam facilis iure.
-        </Message>
+        <MessageText>{messageDetails.message}</MessageText>
         {/* <Info>Delivered</Info> */}
       </Bubble>
       <Avatar />

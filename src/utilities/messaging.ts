@@ -5,9 +5,10 @@ export const sendMessage = (message: string, socket: WebSocket) => {
 };
 
 export const generateMessageObject = (message: string, user: string) => {
+  let time = new Date();
   return {
     userName: user,
     message: message,
-    timeStamp: Date.now(),
+    timeStamp: time,
   };
 };

@@ -18,34 +18,18 @@ const ChatWrapper = styled.div`
 `;
 
 function App() {
-  let myClientID = "";
-
-  let ongoingChat = [
+  let ongoingChat: Message[] = [
     {
-      destinationUserID: 123456,
+      senderUserID: 123456,
       messageType: "message",
       message:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, illum fuga. Vero, eveniet aut incidunt commodi error",
-      timeStamp: Date.now(),
-    },
-    {
-      destinationUserID: 123456,
-      messageType: "message",
-      message:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, illum fuga. Vero, eveniet aut incidunt commodi error",
-      timeStamp: Date.now(),
-    },
-    {
-      destinationUserID: 123456,
-      messageType: "message",
-      message:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, illum fuga. Vero, eveniet aut incidunt commodi error",
-      timeStamp: Date.now(),
+        "Hey there, welcome to the chat! Send something to get the conversation started!",
+      timeStamp: new Date(),
     },
   ];
   const [conversationHistory, setConversationHistory] = useState(ongoingChat);
   const [clientSocket, setClientSocket] = useState<WebSocket | null>(null);
-
+  const [myClientID, setMyClientID] = useState<number>();
   let socket: WebSocket;
 
   useEffect(() => {
@@ -63,11 +47,12 @@ function App() {
         // console.log("Trying to parse message from the server!", message);
         const serverMessage = JSON.parse(message.data.toString());
         if (serverMessage.messageType === "confirmation") {
-          myClientID = serverMessage.userID;
+          setMyClientID(serverMessage.userID);
           console.log("My clientID is: ", myClientID);
         } else {
           console.log("The server has responded with:", message);
-          updateConversationHistory(message.data.toString());
+          console.log("HERE IS THE DATAAA, ", JSON.parse(message.data));
+          updateConversationHistory(JSON.parse(message.data));
         }
       });
     } catch (e) {
@@ -87,8 +72,12 @@ function App() {
     <AppWrapper>
       <ChannelSideBar />
       <ChatWrapper>
-        <ChatDisplay chat={conversationHistory} />
-        <ChatInput chatSocket={clientSocket}></ChatInput>
+        <ChatDisplay chat={conversationHistory} userID={myClientID} />
+        <ChatInput
+          chatSocket={clientSocket}
+          updateChat={updateConversationHistory}
+          userID={myClientID}
+        ></ChatInput>
       </ChatWrapper>
     </AppWrapper>
   );
